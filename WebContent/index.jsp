@@ -8,16 +8,11 @@
 </head>
 <body>
 
-	This is the homepage for shopping
+	This is the homepage for shopping made by 1292032 Lee-SangHoon.
 
-	<p>
-		<a href="/helloMVC/home?action=login"> go to login page </a>
-	</p>
-	<br />
-	<p>
-		<a href="/helloMVC/home?action=help"> go to help page </a>
-	</p>
-	<br />
+	<p>	<a href="/helloMVC/home?action=login"> go to login page </a> </p>
+	<p>	<a href="/helloMVC/home?action=register"> go to register page </a> </p>
+	
 
 </body>
 </html>

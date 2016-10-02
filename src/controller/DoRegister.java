@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,41 +11,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Customer;
 import service.CustomerService;
-
 /**
- * this servlet processes the request of loginForm. And send an appropriate response base on request data. 
+ * this servlet processes the request of registerForm. And add the information that created based on request data.
  * */
-@WebServlet("/doLogin")
-public class DoLogin extends HttpServlet {
+@WebServlet("/doRegister")
+public class DoRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public DoLogin() {
-		super();
-	}
+       
+    public DoRegister() {
+        super();
+    }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		// get request information.
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
-
-		// Perfoorm business logic. Return a bean as a result.
-		// CustomerService service = new CustomerService();
+		String name = request.getParameter("name");
+		String gender = request.getParameter("gender");
+		String email = request.getParameter("email");
+		
+		// create customer instance and add this to database.
 		CustomerService service = CustomerService.getInstance();
-		Customer customer = service.login(id, password);
-
-		String page;
-		if (customer == null) {
-			page = "/view/loginFail.jsp";
-			request.setAttribute("id", id);
-		}
-		else {
-			page = "/view/loginSuccess.jsp";
-			request.setAttribute("customer", customer);
-		}
-
+		Customer customer = new Customer(id, password, name, gender, email);
+		service.addCustomer(customer);
+		request.setAttribute("customer", customer);
+		
 		// send appropriate response to client.
-		RequestDispatcher dispatcher = request.getRequestDispatcher(page); // forwarding
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/registerSuccess.jsp"); // forwarding
 		dispatcher.forward(request, response);
 	}
+
 }
